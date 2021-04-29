@@ -11,25 +11,23 @@ import java.util.List;
 
 @Repository
 public class TransactionRepository {
-    private List<Transaction> transactions = new ArrayList<>(100);
+    private List<Transaction> transactions = new ArrayList<>();
 
     public TransactionRepository () {
-        super();
-        populateData();
+        getData();
     }
 
-    public List<Transaction> findAll () {
+    public List<Transaction> findTransactions() {
         return transactions;
     }
 
     @SuppressWarnings("unchecked")
-    private void populateData() {
+    private void getData() {
         try (FileInputStream fileInputStream = new FileInputStream("transactions.txt");
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);) {
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
             this.transactions = (List<Transaction>) objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 }
